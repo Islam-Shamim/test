@@ -62,13 +62,15 @@ const Home = () => {
               <td>Email</td>
               <td>Phone</td>
               <td>Date</td>
-              <td className="flex  items-center">
+              <td >
+                <div className="flex items-center">
                 <button className="mr-4">
                   <FaEdit className="text-2xl" />
                 </button>
                 <button>
                   <MdDelete className="text-2xl" />
                 </button>
+                </div>
               </td>
             </tr>
           </tbody>

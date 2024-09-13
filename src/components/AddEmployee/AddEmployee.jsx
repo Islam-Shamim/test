@@ -13,8 +13,8 @@ const AddEmployee = () => {
     }
   return (
     <div className="bg-base-50 p-10 w-full">
-      <h2 className="text-3xl font-bold font-serif italic px-8">
-        Add New Coffee
+      <h2 className="text-3xl font-bold font-serif italic px-8 text-center">
+        Add New Employee
       </h2>
       <form className="card-body" onSubmit={handleAddEmployee}>
         {/* First & Last Name */}
