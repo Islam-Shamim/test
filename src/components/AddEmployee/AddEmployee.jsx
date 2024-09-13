@@ -80,7 +80,7 @@ const AddEmployee = () => {
               <span className="label-text">Date of birth</span>
             </label>
             <input
-              type="text"
+              type="date"
               name="date"
               placeholder="Date"
               className="input input-bordered"
