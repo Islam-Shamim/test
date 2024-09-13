@@ -1,8 +1,14 @@
-import { FaEdit } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { MdDelete } from "react-icons/md";
+import User from "./User";
 
 const Home = () => {
+  const [users,setUsers] = useState([])
+  useEffect(()=>{
+    fetch("http://localhost:5000/users")
+    .then(res=>res.json())
+    .then(data=>setUsers(data))
+  },[])
   return (
     <div className="w-full border-2">
       <div className="border-2 rounded p-2 m-10 flex items-center justify-around">
@@ -44,35 +50,10 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr className="border-1">
-              <td>
-                <div className="avatar">
-                  <div className="mask mask-squircle h-12 w-12">
-                    <img
-                      src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                      alt="Avatar Tailwind CSS Component"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td>
-                <h2 className="font-bold">Hart Hagerty</h2>
-              </td>
-              <td>Email</td>
-              <td>Phone</td>
-              <td>Date</td>
-              <td >
-                <div className="flex items-center">
-                <button className="mr-4">
-                  <FaEdit className="text-2xl" />
-                </button>
-                <button>
-                  <MdDelete className="text-2xl" />
-                </button>
-                </div>
-              </td>
-            </tr>
+            {
+              users.map(user=><User key={user._id} user={user}></User>)
+            }
+            
           </tbody>
         </table>
       </div>
