@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 const NavBer = () => {
   return (
-    <ul className="menu static rounded-box w-40">
+    <ul className="menu static w-40">
       <li>
         <NavLink to="/">
           <FaHome />
