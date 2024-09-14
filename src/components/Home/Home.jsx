@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import User from "./User";
-import "./Home.css";
 import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
