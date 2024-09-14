@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import User from "./User";
+import "./Home.css";
 import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
-  const [users,setUsers] = useState([])
-  const {count} = useLoaderData();
-  const userPerPage = 10;
-  const numberOfPages = Math.ceil(count/userPerPage);
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const { count } = useLoaderData();
+  const itemsPerPage = 10;
+  const numberOfPages = Math.ceil(count / itemsPerPage);
 
   // const pages = []
   // for(let i=0;i<numberOfPages;i++){
@@ -15,16 +17,27 @@ const Home = () => {
   // }
   // console.log(pages)
 
-  const pages = [...Array(numberOfPages).keys()]
-  console.log(pages)
+  const pages = [...Array(numberOfPages).keys()];
+  console.log(pages);
 
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleNextPage = () => {
+    if (currentPage < 9) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-
-  useEffect(()=>{
-    fetch("http://localhost:5000/users")
-    .then(res=>res.json())
-    .then(data=>setUsers(data))
-  },[])
+  useEffect(() => {
+    fetch(
+      `http://localhost:5000/users?page=${currentPage}&size=${itemsPerPage}`
+    )
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
+  }, [currentPage, itemsPerPage]);
   return (
     <div className="w-full border-2">
       <div className="border-2 rounded p-2 m-10 flex items-center justify-around">
@@ -66,19 +79,41 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              users.map(user=><User key={user._id} user={user} users={users} setUsers={setUsers}></User>)
-            }
-            
+            {users.map((user) => (
+              <User
+                key={user._id}
+                user={user}
+                users={users}
+                setUsers={setUsers}
+              ></User>
+            ))}
           </tbody>
         </table>
-        <div className="bg-gray mt-8 right-4">
-        {
-          pages.map(page=><button key={page} className="mr-2 px-4 py-2 rounded text-white bg-slate-800">{page}</button>)
-        }
+        <div className="flex justify-between mt-8 items-center">
+          <div>
+            {
+              (currentPage + 1) != numberOfPages ?<p>Showing {currentPage*10} to {(currentPage+1)*10} out of {count}</p>: <p>Showing {currentPage*10} to {(count)} out of {count}</p> 
+            }
+          </div>
+          <div>
+            <button onClick={handlePrevPage} className="border-2 px-4 py-2">
+              Prev
+            </button>
+            {pages.map((page) => (
+              <button
+                onClick={() => setCurrentPage(page)}
+                key={page}
+                className="px-4 py-2 border-2"
+              >
+                {page+1}
+              </button>
+            ))}
+            <button onClick={handleNextPage} className="border-2 px-4 py-2">
+              Next
+            </button>
+          </div>
+        </div>
       </div>
-      </div>
-      
     </div>
   );
 };
